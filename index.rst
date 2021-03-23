@@ -39,7 +39,7 @@ Example of silent install for STA EU cloud that caches the Windows password and 
 .. Code-block:: powershell
 
    msiexec /i <installerName>.msi /quiet 
-   COMPANYNAME=swedemo TOKENVALIDATORLOCATION=eu.cloud.safenetid.com 
+   COMPANYNAME=swedemo TOKENVALIDATORLOCATION=cloud.eu.safenetid.com 
    USESSL=s USEFAILOVER=0 LOGONMODE=1 EXEMPTADMINS=1
 
 Example of silent installation *without* forced reboot:
