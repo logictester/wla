@@ -23,140 +23,6 @@ WIP
 
 
 
-
-Customizing the WLA logon experience
-====================================
-
-The default logon message(s) introduced by the Windows Logon Agent can be tailored to customer needs with messages replaced by modifying language files. This can be achieved either post installation (as seen below) or prior installation (by modifying the MSI package itself). 
-
-
-.. tip::
-   The below instructions details a "textbook" approach to modifying the U/X. For demo purposes you can simply edit and save the existing file using any test editor (no need to backup the file or use the registry etcetera).
-
-The following instructions changes the most often seen user dialog:
-
-#. Press the :kbd:`Windwows` key and :kbd:`e` simultaneously to bring up **File Explorer**
-#. Navigate to: :code:`"Program Files\SafeNet\Windows Logon\languages\en\"`
-#. Copy and paste the file :file:`LogonClient.ccl` giving it a new name (e.g. :file:`LogonClient_v2.ccl`)
-#. Open the new file in your text editor of choice and search and find: ";122"
-#. Modify the current text with your own text, e.g.: 
-
-   .. Code-block::
-      
-	  Press ENTER for Push OTP!	
-
-#. Exit saving the file
-#. Press the :kbd:`Windwows` key + :kbd:`r` simultaneously to bring up the Run command
-#. Type **regedit** and press :kbd:`Enter` to launch the Registry Editor
-#. Navigate to: :code:`HKEY_LOCAL_MACHINE\SOFTWARE\CRYPTOCard\AuthGINA`
-#. Double-click to edit the key :code:`LocalizedMessages`
-#. Change the key value to point to the new file (step 3 above)
-#. Exit the Registry Editor
-#. Log off or restart to review the implementation of your modified user dialogue.
-
-.. thumbnail:: /images/wla/loginWithPush.png
-   :align: center
-   :title: Figure: Modified login text.
-   :show_caption: true
-|
-   
-	  
-Improving RDP User Experience (U/X) 
-===================================
-
-As with the interactive login, when using :abbr:`RDP (Remote Desktop Protocol)` to connect to a :abbr:`WLA (Windows Logon Agent)` enabled host the default login screen presents multiple fields accompanied by text that may not be applicable to the customers use of the agent. Such field labels includes **"RDP User's IP"** and **"Please Enter your [PIN].."** as seen below.
-
-.. thumbnail:: /images/wla/loginDefaultRDP.png
-   :align: center
-   :title: Figure: The default login screen over RDP.
-   :show_caption: true
-|
-To address this issue there are two steps required:
-
-* **Disable NLA on the target host**
-* **Modify the RDP file**
-
-Disable NLA on the target host
-------------------------------
-
-#. Press the :kbd:`Windwows` key and :kbd:`e` simultaneously to bring up **File Explorer**
-#. Righ-click on **Computer** and select :guilabel:`&Properties`
-#. Select :guilabel:`&Advanced system settings`
-#. Click the :guilabel:`&Remote` tab and uncheck :abbr:`NLA (Network Level Authentication)`:
-
-   .. thumbnail:: /images/wla/disableNLA.png
-      :align: center
-      :title: Figure: To disable NLA make sure it is unchecked.
-      :show_caption: true
-
-#. Click :guilabel:`&OK` and exit
-#. Next, edit the RDP file to contain the following line:
-
-::
-
-    enablecredsspsupport:i:0 
-
-
-.. warning::
-   Make sure you understand any security implications of the above setting before implementing it.
-
-Example RDP file 
-----------------
-The following is an example RDP file for a VM in Microsoft Azure. To use this as a template, save the content to a file with the extension :file:`.rdp` and modify line 23 (highlighted below) with the target IP address.
-
-.. code-block:: text
-   :emphasize-lines: 23, 47
-   :linenos:
-	  
-   use multimon:i:0
-   desktopwidth:i:1920
-   desktopheight:i:1080
-   session bpp:i:32
-   winposstr:s:0,3,0,0,800,600
-   compression:i:1
-   keyboardhook:i:2
-   audiocapturemode:i:0
-   videoplaybackmode:i:1
-   connection type:i:7
-   networkautodetect:i:1
-   bandwidthautodetect:i:1
-   displayconnectionbar:i:1
-   enableworkspacereconnect:i:0
-   disable wallpaper:i:0
-   allow font smoothing:i:0
-   allow desktop composition:i:0
-   disable full window drag:i:1
-   disable menu anims:i:1
-   disable themes:i:0
-   disable cursor setting:i:0
-   bitmapcachepersistenable:i:1
-   full address:s:40.69.70.188:3389
-   audiomode:i:0
-   redirectprinters:i:1
-   redirectcomports:i:0
-   redirectsmartcards:i:1
-   redirectclipboard:i:1
-   redirectposdevices:i:0
-   autoreconnection enabled:i:1
-   authentication level:i:2
-   prompt for credentials:i:0
-   negotiate security layer:i:1
-   remoteapplicationmode:i:0
-   alternate shell:s:
-   shell working directory:s:
-   gatewayhostname:s:
-   gatewayusagemethod:i:4
-   gatewaycredentialssource:i:4
-   gatewayprofileusagemethod:i:0
-   promptcredentialonce:i:0
-   gatewaybrokeringtype:i:0
-   use redirection server name:i:0
-   rdgiskdcproxy:i:0
-   kdcproxyname:s:
-   drivestoredirect:s:
-   enablecredsspsupport:i:0
-
-
 Deployment
 ==========
 WIP 
@@ -284,6 +150,137 @@ TLS 1.2
 Some Operating Systems such as **Windows 7** does not support TLS 1.2 natively and the use of Windows Logon Agent will fail unless protocol support is modified. 
 
 To learn more, please refer to  `Microsoft documentation <https://support.microsoft.com/en-ie/help/3140245/update-to-enable-tls-1-1-and-tls-1-2-as-default-secure-protocols-in-wi>`_
+
+
+Customizing the WLA logon experience
+====================================
+
+The default logon message(s) introduced by the Windows Logon Agent can be tailored to customer needs with messages replaced by modifying language files. This can be achieved either post installation (as seen below) or prior installation (by modifying the MSI package itself). 
+
+
+.. tip::
+   The below instructions details a "textbook" approach to modifying the U/X. For demo purposes you can simply edit and save the existing file using any test editor (no need to backup the file or use the registry etcetera).
+
+The following instructions changes the most often seen user dialog:
+
+#. Press the :kbd:`Windwows` key and :kbd:`e` simultaneously to bring up **File Explorer**
+#. Navigate to: :code:`"Program Files\SafeNet\Windows Logon\languages\en\"`
+#. Copy and paste the file :file:`LogonClient.ccl` giving it a new name (e.g. :file:`LogonClient_v2.ccl`)
+#. Open the new file in your text editor of choice and search and find: ";122"
+#. Modify the current text with your own text, e.g.: 
+
+   .. Code-block::
+      
+	  Press ENTER for Push OTP!	
+
+#. Exit saving the file
+#. Press the :kbd:`Windwows` key + :kbd:`r` simultaneously to bring up the Run command
+#. Type **regedit** and press :kbd:`Enter` to launch the Registry Editor
+#. Navigate to: :code:`HKEY_LOCAL_MACHINE\SOFTWARE\CRYPTOCard\AuthGINA`
+#. Double-click to edit the key :code:`LocalizedMessages`
+#. Change the key value to point to the new file (step 3 above)
+#. Exit the Registry Editor
+#. Log off or restart to review the implementation of your modified user dialogue.
+
+.. thumbnail:: /images/wla/loginWithPush.png
+   :title: Figure: Modified login text.
+   :show_caption: true
+|
+   
+	  
+Improving RDP User Experience (U/X) 
+===================================
+
+As with the interactive login, when using :abbr:`RDP (Remote Desktop Protocol)` to connect to a :abbr:`WLA (Windows Logon Agent)` enabled host the default login screen presents multiple fields accompanied by text that may not be applicable to the customers use of the agent. Such field labels includes **"RDP User's IP"** and **"Please Enter your [PIN].."** as seen below.
+
+.. thumbnail:: /images/wla/loginDefaultRDP.png
+   :title: Figure: The default login screen over RDP.
+   :show_caption: true
+|
+To address this issue there are two steps required:
+
+* **Disable NLA on the target host**
+* **Modify the RDP file**
+
+Disable NLA on the target host
+------------------------------
+
+#. Press the :kbd:`Windwows` key and :kbd:`e` simultaneously to bring up **File Explorer**
+#. Righ-click on **Computer** and select :guilabel:`&Properties`
+#. Select :guilabel:`&Advanced system settings`
+#. Click the :guilabel:`&Remote` tab and uncheck :abbr:`NLA (Network Level Authentication)`:
+
+   .. thumbnail:: /images/wla/disableNLA.png
+      :width: 80%
+      :title: Figure: To disable NLA make sure it is unchecked.
+      :show_caption: true
+
+#. Click :guilabel:`&OK` and exit
+#. Next, edit the RDP file to contain the following line:
+
+::
+
+    enablecredsspsupport:i:0 
+
+
+.. warning::
+   Make sure you understand any security implications of the above setting before implementing it.
+
+Example RDP file 
+----------------
+The following is an example RDP file for a VM in Microsoft Azure. To use this as a template, save the content to a file with the extension :file:`.rdp` and modify line 23 (highlighted below) with the target IP address.
+
+.. code-block:: text
+   :emphasize-lines: 23, 47
+   :linenos:
+	  
+   use multimon:i:0
+   desktopwidth:i:1920
+   desktopheight:i:1080
+   session bpp:i:32
+   winposstr:s:0,3,0,0,800,600
+   compression:i:1
+   keyboardhook:i:2
+   audiocapturemode:i:0
+   videoplaybackmode:i:1
+   connection type:i:7
+   networkautodetect:i:1
+   bandwidthautodetect:i:1
+   displayconnectionbar:i:1
+   enableworkspacereconnect:i:0
+   disable wallpaper:i:0
+   allow font smoothing:i:0
+   allow desktop composition:i:0
+   disable full window drag:i:1
+   disable menu anims:i:1
+   disable themes:i:0
+   disable cursor setting:i:0
+   bitmapcachepersistenable:i:1
+   full address:s:40.69.70.188:3389
+   audiomode:i:0
+   redirectprinters:i:1
+   redirectcomports:i:0
+   redirectsmartcards:i:1
+   redirectclipboard:i:1
+   redirectposdevices:i:0
+   autoreconnection enabled:i:1
+   authentication level:i:2
+   prompt for credentials:i:0
+   negotiate security layer:i:1
+   remoteapplicationmode:i:0
+   alternate shell:s:
+   shell working directory:s:
+   gatewayhostname:s:
+   gatewayusagemethod:i:4
+   gatewaycredentialssource:i:4
+   gatewayprofileusagemethod:i:0
+   promptcredentialonce:i:0
+   gatewaybrokeringtype:i:0
+   use redirection server name:i:0
+   rdgiskdcproxy:i:0
+   kdcproxyname:s:
+   drivestoredirect:s:
+   enablecredsspsupport:i:0
 
 
 Uninstalling
