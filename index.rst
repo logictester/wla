@@ -201,8 +201,11 @@ As with the interactive login, when using :abbr:`RDP (Remote Desktop Protocol)` 
 |
 To address this issue there are two steps required:
 
-* **Disable NLA on the target host**
-* **Modify the RDP file**
+* :ref:`Disable NLA on the target host <disable-nla>`
+
+* :ref:`Modify the RDP file <modify-rdp-file>`
+
+.. _disable-nla:
 
 Disable NLA on the target host
 ------------------------------
@@ -218,6 +221,8 @@ Disable NLA on the target host
       :show_caption: true
 
 #. Click :guilabel:`&OK` and exit
+
+.. _modify-rdp-file:
 
 Modify the RDP file
 -------------------
