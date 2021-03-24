@@ -17,18 +17,20 @@ Windows Logon Agent (WLA)
 
 
 Overview
-^^^^^^^^
+********
+
 WIP
 
 
 
 
 Deployment
-==========
+**********
+
 WIP 
 
 Silent installation
--------------------
+===================
 
 One approach to controlling the choices made to the installer during installation is to run the installation silently with parameters. This allows the customer to set key configuration items such as authentication server FQDN and logon mode.
 
@@ -122,12 +124,12 @@ The following table outlines :abbr:`MSI (Microsoft Installer)` switches that can
 +----------------+--------------+------------------------------------------------------------+
    
 Interactive installation
-------------------------
+========================
 For user controlled interactive installation, please refer to official product documentation.
 
 
 Traffic
--------
+=======
 
 The following traffic must be allowed for the :abbr:`WLA (Windows Logon Agent)` to function.
 
@@ -153,7 +155,7 @@ To learn more, please refer to  `Microsoft documentation <https://support.micros
 
 
 Customizing the WLA logon experience
-====================================
+************************************
 
 The default logon message(s) introduced by the Windows Logon Agent can be tailored to customer needs with messages replaced by modifying language files. This can be achieved either post installation (as seen below) or prior installation (by modifying the MSI package itself). 
 
@@ -216,18 +218,24 @@ Disable NLA on the target host
       :show_caption: true
 
 #. Click :guilabel:`&OK` and exit
-#. Next, edit the RDP file to contain the following line:
 
-::
+Modify the RDP file
+-------------------
 
-    enablecredsspsupport:i:0 
+#. Edit the RDP file to contain the following line:
 
+   ::
+
+       enablecredsspsupport:i:0
+	   
+#. Save and close the file
 
 .. warning::
    Make sure you understand any security implications of the above setting before implementing it.
 
 Example RDP file 
-----------------
+^^^^^^^^^^^^^^^^
+
 The following is an example RDP file for a VM in Microsoft Azure. To use this as a template, save the content to a file with the extension :file:`.rdp` and modify line 23 (highlighted below) with the target IP address.
 
 .. code-block:: text
@@ -285,6 +293,7 @@ The following is an example RDP file for a VM in Microsoft Azure. To use this as
 
 Uninstalling
 ============
+
 The Windows Logon Agent (WLA) can be uninstalled either from **Control Panel**, by running the MSI again -or silently using the following command:
 
 ::
@@ -297,6 +306,21 @@ The Windows Logon Agent (WLA) can be uninstalled either from **Control Panel**, 
 Upgrading
 =========
 WIP
+
+
+::
+
+    msiexec /i "SafeNet Authentication Service Agent for Win 8-10-2012-2016 x64.msi" 
+	/quiet REINSTALLMODE=vomus REINSTALL=ALL
+
+v	Use to run from the source package and re-cache the local package. 
+o	Reinstall if the file is missing or is an older version.
+m	Rewrite all required registry entries for machine
+u	Rewrite all required registry entries for user
+s	Reinstall overwriting any existing shortcuts and icons.
+
+With regards to deployment tools it's important to note that WLA currently does not increment or change its **ProductCode** value. Tools such as Microsoft SCCM (formerly known as SMS) uses this property to see if the software is already installed; The presence of **UpgradeCode** determines product family (e.g. WLA) and **ProductCode** determines what version is installed versus what version is *about* to be installed. With ProductCode being the same, :code:`{523727B0-D5D5-4392-935B-BFEAA70F29A6}` this approach to upgrade will not work unless the MSI is modified and re-signed using a trusted certificate.
+
 
 Registry keys
 =============
