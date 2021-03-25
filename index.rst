@@ -310,17 +310,18 @@ The Windows Logon Agent (WLA) can be uninstalled either from **Control Panel**, 
 
 Upgrading
 =========
-WIP
+
+//TODO: Get clarification from R&D on upgrade procedure and supported *from* versions: upgrade from 2.x appears not to work.
 
 
 ::
 
     msiexec /i <installerName>.msi /quiet REINSTALLMODE=vomus REINSTALL=ALL
 
-.. note::
-   With regards to the use deployment tools it's important to note that WLA currently does not increment the :code:`ProductCode` value. Tools such as Microsoft SCCM uses this property to see if the software is already installed; The comparison of :code:`UpgradeCode` determines product family (e.g. WLA) and :code:`ProductCode` determines what version *is* installed versus what version is *about* to be installed.
+With regards to the use deployment tools it's important to note that WLA currently does not increment the :code:`ProductCode` value. Tools such as Microsoft SCCM uses this property to see if the software is already installed; The comparison of :code:`UpgradeCode` determines product family (e.g. WLA) and :code:`ProductCode` determines what version *is* installed versus what version is *about* to be installed.
    
-   With ProductCode being the same, :code:`{523727B0-D5D5-4392-935B-BFEAA70F29A6}`, this approach to upgrade will not work *unless* the MSI is modified and re-signed using a trusted certificate.
+.. note::
+   With ProductCode being the same, this approach to upgrade will not work *unless* the MSI is modified and re-signed using a trusted certificate.
 
 
 Registry keys
