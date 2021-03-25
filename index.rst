@@ -315,16 +315,10 @@ WIP
 
 ::
 
-    msiexec /i "SafeNet Authentication Service Agent for Win 8-10-2012-2016 x64.msi" 
-	/quiet REINSTALLMODE=vomus REINSTALL=ALL
+    msiexec /i <installerName>.msi /quiet REINSTALLMODE=vomus REINSTALL=ALL
 
-v	Use to run from the source package and re-cache the local package. 
-o	Reinstall if the file is missing or is an older version.
-m	Rewrite all required registry entries for machine
-u	Rewrite all required registry entries for user
-s	Reinstall overwriting any existing shortcuts and icons.
-
-With regards to deployment tools it's important to note that WLA currently does not increment or change its **ProductCode** value. Tools such as Microsoft SCCM (formerly known as SMS) uses this property to see if the software is already installed; The presence of **UpgradeCode** determines product family (e.g. WLA) and **ProductCode** determines what version is installed versus what version is *about* to be installed. With ProductCode being the same, :code:`{523727B0-D5D5-4392-935B-BFEAA70F29A6}` this approach to upgrade will not work unless the MSI is modified and re-signed using a trusted certificate.
+.. note::
+   With regards to deployment tools it's important to note that WLA currently does not increment or change its **ProductCode** value. Tools such as Microsoft SCCM (formerly      known as SMS) uses this property to see if the software is already installed; The presence of **UpgradeCode** determines product family (e.g. WLA) and **ProductCode** determines  what version is installed versus what version is *about* to be installed. With ProductCode being the same, :code:`{523727B0-D5D5-4392-935B-BFEAA70F29A6}` this approach to upgrade will not work unless the MSI is modified and re-signed using a trusted certificate.
 
 
 Registry keys
