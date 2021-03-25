@@ -97,7 +97,7 @@ The following table outlines :abbr:`WLA (Windows Logon Agent)` specific properti
 +--------------------------+--------+----------------------------------------------------------+
 
 .. attention::
-   Note that examining the MSI package with logging you will find additional keys/switches that are possibly deprecated by Engineering, but nonetheless not functional. These include, but are not limited to :code:`EXEMPTADMINSCHECK`, :code:`EXEMPTADMINSCHECK1`, :code:`KEYFILEPATH`, :code:`KEYFILE` and :code:`USEGRIDCHECK`.
+   Note that examining the MSI package with logging you will find additional keys/switches that non-functional, possibly deprecated by Engineering. These include, but are not limited to :code:`EXEMPTADMINSCHECK`, :code:`EXEMPTADMINSCHECK1`, :code:`KEYFILEPATH`, :code:`KEYFILE` and :code:`USEGRIDCHECK`.
 
 Generic MSI command line switches
 ---------------------------------
