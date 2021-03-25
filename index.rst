@@ -299,7 +299,7 @@ The following is an example RDP file for a VM in Microsoft Azure. To use this as
 Uninstalling
 ============
 
-The Windows Logon Agent (WLA) can be uninstalled either from **Control Panel**, by running the MSI again -or silently using the following command:
+The :abbr:`WLA (Windows Logon Agent)` can be uninstalled either from **Control Panel**, by running the MSI again -or silently using the following command:
 
 ::
 
@@ -311,6 +311,7 @@ The Windows Logon Agent (WLA) can be uninstalled either from **Control Panel**, 
 Upgrading
 =========
 
+
 //TODO: Get clarification from R&D on upgrade procedure and supported *from* versions: upgrade from 2.x appears not to work.
 
 
@@ -318,7 +319,7 @@ Upgrading
 
     msiexec /i <installerName>.msi /quiet REINSTALLMODE=vomus REINSTALL=ALL
 
-With regards to the use deployment tools it's important to note that WLA currently does not increment the :code:`ProductCode` value. Tools such as Microsoft SCCM uses this property to see if the software is already installed; The comparison of :code:`UpgradeCode` determines product family (e.g. WLA) and :code:`ProductCode` determines what version *is* installed versus what version is *about* to be installed.
+With regards to the use deployment tools it's important to note that :abbr:`WLA (Windows Logon Agent)` currently does not increment the :code:`ProductCode` value. Tools such as Microsoft SCCM uses this property to see if the software is already installed; The comparison of :code:`UpgradeCode` determines product family (e.g. WLA) and :code:`ProductCode` determines what version *is* installed versus what version is *about* to be installed.
    
 .. note::
    With ProductCode being the same, this approach to upgrade will not work *unless* the MSI is modified and re-signed using a trusted certificate.
@@ -327,7 +328,7 @@ With regards to the use deployment tools it's important to note that WLA current
 Registry keys
 =============
 
-Registry entries for WLA largely reflects GUI options in the Logon Manager app and GPO (ADMX), however some discrepancies exist where more control is available through registry than GUI or Group Policy. This includes but is not limited to the ability to set language file location.
+Registry entries for :abbr:`WLA (Windows Logon Agent)` largely reflects GUI options in the Logon Manager app and GPO (ADMX), however some discrepancies exist where more control is available through registry than GUI or Group Policy. This includes but is not limited to the ability to set language file location.
 
 The WLA registry keys are available under:
 
