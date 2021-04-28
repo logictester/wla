@@ -2,9 +2,9 @@
    sphinx-quickstart on Sat Mar  6 02:48:40 2021.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
-===========================================
+=========================
 Windows Logon Agent (WLA)
-===========================================
+=========================
 
 .. toctree::
    :hidden:
@@ -70,6 +70,37 @@ An MSI package is deployed (distributed) through GPO. To create an object, you n
 #. Click the newly created GPO. In the right pane, right-click the linked domain name and select :guilabel:`enforce`.
 
 .. note:: Performing the above steps will create and enforce a new GPO, and will link it with the domain.
+
+Configuring ADMX and ADML Settings
+++++++++++++++++++++++++++++++++++
+
+The SafeNet Agent for Windows Logon policy settings are stored in a Windows Administrative Template (ADMX) file. The settings can be edited using Windows tools. The settings can be propagated to the entire domain, or be applied to the local computer and domain controllers only.
+
+To configure settings:
+
+#. Add ADMX and ADML file to Group Policy Object (GPO) Editor
+
+#. Configure ADMX and ADML settings using GPO Editor
+
+Adding ADMX and ADML Files to Group Policy Object Editor
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+#. Copy the Local Group Policy definition (C:\Windows\PolicyDefinitions) to Domain Group Policy (C:\Windows\SYSVOL\sysvol\<domain_name>\Policies).
+
+#. Copy the ADMX file (:code:`<Application_name>_AgentConfig_<Date>.admx`) from Agent Installation Package, to the following location on your domain controller/server:
+
+::
+
+  C:\Windows\SYSVOL\sysvol\<domain_name>\Policies\PolicyDefinitions
+
+#. Copy the appropriate ADML language file (:code:`<Application_name>_AgentConfig_<Date>.adml`) to a language folder in the :code:`\PolicyDefinitions` folders.
+
+For example,
+
+  • In Windows 8/10, the English language file provided should be written to: :code:`C:\Windows\SYSVOL\sysvol\<domain_name>\Policies\PolicyDefinitions\en-US`
+
+Configuring ADMX and ADML Settings
+++++++++++++++++++++++++++++++++++
 
 
 
