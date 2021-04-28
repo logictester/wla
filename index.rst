@@ -29,6 +29,35 @@ Deployment
 
 WIP 
 
+GPO
+===
+
+Installing WLA and Configuring Settings via Group Policy Object (GPO)
+*********************************************************************
+
+Group Policy enables policy-based administration that allows to centrally manage and configure many policy settings. Group Policy uses directory services and security group membership to provide flexibility and support extensive configuration information. Policy settings are specified by an administrator.
+For more information about GPO, please refer to `Group Policy Overview <https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/hh831791(v=ws.11)>`_.
+
+Installation of SafeNet Agent for Windows Logon via GPO
+*******************************************************
+
+To install the SafeNet Agent for Windows Logon via GPO, follow the below steps:
+
+Creating a Distribution Point
++++++++++++++++++++++++++++++
+
+To deploy an MSI through GPO, you need to perform the below steps to create a distribution point on the **Publishing Server**.
+
+#. Log in to the server as an administrator.
+#. Create a shared network folder.
+
+.. note:: The shared network folder will contain the MSI package and the Agent Configuration file.
+
+#. Set permissions on this folder to allow access to the distribution package.
+#. Copy the MSI and Agent file in the previously created shared network folder.
+
+
+
 Silent installation
 ===================
 
