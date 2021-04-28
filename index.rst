@@ -61,8 +61,17 @@ Creating a Group Policy Object
 
 An MSI package is deployed (distributed) through GPO. To create an object, you need to perform the below steps:
 
-#. To open **Group Policy Management**, in the Run menu enter *gpmc.msc* and click :guilabel:`OK`.
-#. 
+#. To open **Group Policy Management**, in the **Run** menu enter *gpmc.msc* and click :guilabel:`OK`.
+#. Expand **Forest** (your forest) --> **Domains** (your domain).
+#. Right-click the **Group Policy Objects** and select :guilabel:`New`.
+#. Enter a name for your policy and leave **Source Starter GPO** as *none*.
+#. Right-click the domain name and select :guilabel:`Link an Existing GPO…`.
+#. In **Select GPO** pop up, select newly created GPO and click :guilabel:`OK`.
+#. Click the newly created GPO. In the right pane, right-click the linked domain name and select :guilabel:`enforce`.
+
+.. note:: Performing the above steps will create and enforce a new GPO, and will link it with the domain.
+
+
 
 Silent installation
 ===================
