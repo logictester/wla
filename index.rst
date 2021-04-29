@@ -95,12 +95,42 @@ Adding ADMX and ADML Files to Group Policy Object Editor
 
 #. Copy the appropriate ADML language file (:code:`<Application_name>_AgentConfig_<Date>.adml`) to a language folder in the :code:`\PolicyDefinitions` folders.
 
-For example,
+For example:
 
   • In Windows 8/10, the English language file provided should be written to: :code:`C:\Windows\SYSVOL\sysvol\<domain_name>\Policies\PolicyDefinitions\en-US`
 
 Configuring ADMX and ADML Settings
-++++++++++++++++++++++++++++++++++
+----------------------------------
+
+After the Administrative Template has been added, you can open the template to configure the settings
+
+**To open the SafeNet Windows Logon Agent settings:**
+
+1. Open the Windows **Run** menu and type in :code:`gpmc.msc`
+2. Click :guilabel:`OK`
+3. The **Group Policy Management** windows opens
+
+.. thumbnail:: /images/wla/gpmc.png
+
+4. Complete one of the following actions:
+
+- To propagate the settings to all clients in the domain, right-click **Default Domain Policy** or **newly created GPO** under the domain node.
+
+- To apply the settings to the local machine and any other domain controllers in this domain, under the **Domain Controllers** node, right-click **Default Domain Controllers Policy**
+
+5. From the dropdown menu, select :guilabel:`Edit`. The **Group Policy Management Editor** window opens
+6. In the left pane, navigate to :menuselection:`Computer Configuration --> Policies --> Administrative Templates --> WLA Policies --> AuthGINA`. The **SafeNet Agent for Windows Logon** settings are displayed in the right pane
+
+.. thumbnail:: /images/wla/wla_policies.png
+
+7. Enable all the required setting (except **PrimaryServiceURL** and **OptionalSecondaryServiceURL**), if not already enabled, with default value or user-defined value
+
+.. important:: The **PrimaryServiceURL** and **OptionalSecondaryServiceURL** should be set to **[Not Configured]**. The value of both the settings gets configured via the .agent file
+
+.. note:: For **LocalUserOrGroup_Ex** and **LocalUserOrGroup_In** settings, in the Value field, you can enter **%COMPUTERNAME%\groupname**. In this case, when the GPO settings are pushed to the client machines, the variable **(%COMPUTERNAME%)** will be automatically set to the computer name of the respective client machine
+
+
+
 
 
 
