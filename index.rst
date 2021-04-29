@@ -17,7 +17,7 @@ Windows Logon Agent (WLA)
 
 
 Overview
-********
+========
 
 WIP
 
@@ -25,12 +25,12 @@ WIP
 
 
 Deployment
-**********
+==========
 
 WIP
 
-GPO
-===
+Group Policy Object (GPO)
+=========================
 
 Installing WLA and Configuring Settings via Group Policy Object (GPO)
 *********************************************************************
@@ -44,7 +44,7 @@ Installation of SafeNet Agent for Windows Logon via GPO
 To install the SafeNet Agent for Windows Logon via GPO, follow the below steps:
 
 Creating a Distribution Point
-+++++++++++++++++++++++++++++
+-----------------------------
 
 To deploy an MSI through GPO, you need to perform the below steps to create a distribution point on the **Publishing Server**.
 
@@ -57,7 +57,7 @@ To deploy an MSI through GPO, you need to perform the below steps to create a di
 #. Copy the MSI and Agent file in the previously created shared network folder.
 
 Creating a Group Policy Object
-++++++++++++++++++++++++++++++
+------------------------------
 
 An MSI package is deployed (distributed) through GPO. To create an object, you need to perform the below steps:
 
@@ -72,7 +72,7 @@ An MSI package is deployed (distributed) through GPO. To create an object, you n
 .. note:: Performing the above steps will create and enforce a new GPO, and will link it with the domain.
 
 Configuring ADMX and ADML Settings
-++++++++++++++++++++++++++++++++++
+----------------------------------
 
 The SafeNet Agent for Windows Logon policy settings are stored in a Windows Administrative Template (ADMX) file. The settings can be edited using Windows tools. The settings can be propagated to the entire domain, or be applied to the local computer and domain controllers only.
 
@@ -83,7 +83,7 @@ To configure settings:
 #. Configure ADMX and ADML settings using GPO Editor
 
 Adding ADMX and ADML Files to Group Policy Object Editor
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--------------------------------------------------------
 
 #. Copy the Local Group Policy definition (C:\Windows\PolicyDefinitions) to Domain Group Policy (C:\Windows\SYSVOL\sysvol\<domain_name>\Policies).
 
