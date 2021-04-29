@@ -2,17 +2,17 @@
    sphinx-quickstart on Sat Mar  6 02:48:40 2021.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
-===========================================
+=========================
 Windows Logon Agent (WLA)
-===========================================
+=========================
 
 .. toctree::
    :hidden:
    :maxdepth: 3
-   
+
 
    index
-      
+
 
 
 
@@ -27,7 +27,82 @@ WIP
 Deployment
 **********
 
-WIP 
+WIP
+
+GPO
+===
+
+Installing WLA and Configuring Settings via Group Policy Object (GPO)
+*********************************************************************
+
+Group Policy enables policy-based administration that allows to centrally manage and configure many policy settings. Group Policy uses directory services and security group membership to provide flexibility and support extensive configuration information. Policy settings are specified by an administrator.
+For more information about GPO, please refer to `Group Policy Overview <https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/hh831791(v=ws.11)>`_.
+
+Installation of SafeNet Agent for Windows Logon via GPO
+*******************************************************
+
+To install the SafeNet Agent for Windows Logon via GPO, follow the below steps:
+
+Creating a Distribution Point
++++++++++++++++++++++++++++++
+
+To deploy an MSI through GPO, you need to perform the below steps to create a distribution point on the **Publishing Server**.
+
+#. Log in to the server as an administrator.
+#. Create a shared network folder.
+
+.. note:: The shared network folder will contain the MSI package and the Agent Configuration file.
+
+#. Set permissions on this folder to allow access to the distribution package.
+#. Copy the MSI and Agent file in the previously created shared network folder.
+
+Creating a Group Policy Object
+++++++++++++++++++++++++++++++
+
+An MSI package is deployed (distributed) through GPO. To create an object, you need to perform the below steps:
+
+#. To open **Group Policy Management**, in the **Run** menu enter *gpmc.msc* and click :guilabel:`OK`.
+#. Expand **Forest** (your forest) --> **Domains** (your domain).
+#. Right-click the **Group Policy Objects** and select :guilabel:`New`.
+#. Enter a name for your policy and leave **Source Starter GPO** as *none*.
+#. Right-click the domain name and select :guilabel:`Link an Existing GPO…`.
+#. In **Select GPO** pop up, select newly created GPO and click :guilabel:`OK`.
+#. Click the newly created GPO. In the right pane, right-click the linked domain name and select :guilabel:`enforce`.
+
+.. note:: Performing the above steps will create and enforce a new GPO, and will link it with the domain.
+
+Configuring ADMX and ADML Settings
+++++++++++++++++++++++++++++++++++
+
+The SafeNet Agent for Windows Logon policy settings are stored in a Windows Administrative Template (ADMX) file. The settings can be edited using Windows tools. The settings can be propagated to the entire domain, or be applied to the local computer and domain controllers only.
+
+To configure settings:
+
+#. Add ADMX and ADML file to Group Policy Object (GPO) Editor
+
+#. Configure ADMX and ADML settings using GPO Editor
+
+Adding ADMX and ADML Files to Group Policy Object Editor
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+#. Copy the Local Group Policy definition (C:\Windows\PolicyDefinitions) to Domain Group Policy (C:\Windows\SYSVOL\sysvol\<domain_name>\Policies).
+
+#. Copy the ADMX file (:code:`<Application_name>_AgentConfig_<Date>.admx`) from Agent Installation Package, to the following location on your domain controller/server:
+
+::
+
+  C:\Windows\SYSVOL\sysvol\<domain_name>\Policies\PolicyDefinitions
+
+#. Copy the appropriate ADML language file (:code:`<Application_name>_AgentConfig_<Date>.adml`) to a language folder in the :code:`\PolicyDefinitions` folders.
+
+For example,
+
+  • In Windows 8/10, the English language file provided should be written to: :code:`C:\Windows\SYSVOL\sysvol\<domain_name>\Policies\PolicyDefinitions\en-US`
+
+Configuring ADMX and ADML Settings
+++++++++++++++++++++++++++++++++++
+
+
 
 Silent installation
 ===================
@@ -40,8 +115,8 @@ Example of silent install for STA EU cloud that caches the Windows password and 
 
 .. Code-block:: powershell
 
-   msiexec /i <installerName>.msi /quiet 
-   COMPANYNAME=swedemo TOKENVALIDATORLOCATION=cloud.eu.safenetid.com 
+   msiexec /i <installerName>.msi /quiet
+   COMPANYNAME=swedemo TOKENVALIDATORLOCATION=cloud.eu.safenetid.com
    USESSL=s USEFAILOVER=0 LOGONMODE=1 EXEMPTADMINS=1
 
 Example of silent installation *without* forced reboot:
@@ -52,7 +127,7 @@ Example of silent installation *without* forced reboot:
 
 
 .. note::
-   In the above examples the installation will run without the user noticing. If the :code:`/quiet` switch is removed the installer will run in interactive mode, but with the applicable settings pre-populated. 
+   In the above examples the installation will run without the user noticing. If the :code:`/quiet` switch is removed the installer will run in interactive mode, but with the applicable settings pre-populated.
 
 
 WLA command line switches
@@ -83,7 +158,7 @@ The following table outlines :abbr:`WLA (Windows Logon Agent)` specific properti
 |USESSL2                   |s       || **s** = toggles use of SSL (requires certificates)      |
 |                          |        || for secondary server                                    |
 +--------------------------+--------+----------------------------------------------------------+
-|LOGONMODE                 |1 (0)   || **1** = Windows password is hidden (cached)             | 
+|LOGONMODE                 |1 (0)   || **1** = Windows password is hidden (cached)             |
 |                          |        || **0** = Windows password and MFA is required            |
 +--------------------------+--------+----------------------------------------------------------+
 |EXEMPTADMINS              |1 (0)   || **1** = Exempts administrators from using MFA           |
@@ -114,15 +189,15 @@ The following table outlines :abbr:`MSI (Microsoft Installer)` switches that can
 | /passive       |              || Installer displays a progress bar to the user indicating  |
 |                |              || an ongoing (silent) installation                          |
 +----------------+--------------+------------------------------------------------------------+
-| /log           | /L*V         | Creates an installation log file                           |        
+| /log           | /L*V         | Creates an installation log file                           |
 +----------------+--------------+------------------------------------------------------------+
 | REBOOT         |ReallySupress || By default when running in silent mode the computer will  |
 |                |              || automatically reboot on installation completion. To avoid |
 |                |              || this behavior you can use REBOOT=ReallySupress instead.   |
-|                |              || In this case the installation will complete on the next   | 
+|                |              || In this case the installation will complete on the next   |
 |                |              || user initiated reboot                                     |
 +----------------+--------------+------------------------------------------------------------+
-   
+
 Interactive installation
 ========================
 For user controlled interactive installation, please refer to official product documentation.
@@ -147,9 +222,9 @@ The following traffic must be allowed for the :abbr:`WLA (Windows Logon Agent)` 
 TLS 1.2
 -------
 .. attention::
-   SafeNet Trusted Access currently implements a requirement on TLS **v1.2**. 
+   SafeNet Trusted Access currently implements a requirement on TLS **v1.2**.
 
-Some Operating Systems such as **Windows 7** does not support TLS 1.2 natively and the use of Windows Logon Agent will fail unless protocol support is modified. 
+Some Operating Systems such as **Windows 7** does not support TLS 1.2 natively and the use of Windows Logon Agent will fail unless protocol support is modified.
 
 To learn more, please refer to  `Microsoft documentation <https://support.microsoft.com/en-ie/help/3140245/update-to-enable-tls-1-1-and-tls-1-2-as-default-secure-protocols-in-wi>`_
 
@@ -157,7 +232,7 @@ To learn more, please refer to  `Microsoft documentation <https://support.micros
 Customizing the WLA logon experience
 ************************************
 
-The default logon message(s) introduced by the Windows Logon Agent can be tailored to customer needs with messages replaced by modifying language files. This can be achieved either post installation (as seen below) or prior installation (by modifying the MSI package itself). 
+The default logon message(s) introduced by the Windows Logon Agent can be tailored to customer needs with messages replaced by modifying language files. This can be achieved either post installation (as seen below) or prior installation (by modifying the MSI package itself).
 
 
 .. tip::
@@ -169,11 +244,11 @@ The following instructions changes the most often seen user dialog:
 #. Navigate to: :code:`"Program Files\SafeNet\Windows Logon\languages\en\"`
 #. Copy and paste the file :file:`LogonClient.ccl` giving it a new name (e.g. :file:`LogonClient_v2.ccl`)
 #. Open the new file in your text editor of choice and search and find: ";122"
-#. Modify the current text with your own text, e.g.: 
+#. Modify the current text with your own text, e.g.:
 
    .. Code-block::
-      
-	  Press ENTER for Push OTP!	
+
+	  Press ENTER for Push OTP!
 
 #. Exit saving the file
 #. Press the :kbd:`Windwows` key + :kbd:`r` simultaneously to bring up the Run command
@@ -188,9 +263,9 @@ The following instructions changes the most often seen user dialog:
    :title: Figure: Modified login text.
    :show_caption: true
 |
-   
-	  
-Improving RDP User Experience (U/X) 
+
+
+Improving RDP User Experience (U/X)
 ===================================
 
 As with the interactive login, when using :abbr:`RDP (Remote Desktop Protocol)` to connect to a :abbr:`WLA (Windows Logon Agent)` enabled host the default login screen presents multiple fields accompanied by text that may not be applicable to the customers use of the agent. Such field labels includes **"RDP User's IP"** and **"Please Enter your [PIN].."** as seen below.
@@ -232,13 +307,13 @@ Modify the RDP file
    ::
 
        enablecredsspsupport:i:0
-	   
+
 #. Save and close the file
 
 .. warning::
    Make sure you understand any security implications of the above setting before implementing it.
 
-Example RDP file 
+Example RDP file
 ^^^^^^^^^^^^^^^^
 
 The following is an example RDP file for a VM in Microsoft Azure. To use this as a template, save the content to a file with the extension :file:`.rdp` and modify line 23 (highlighted below) with the target IP address.
@@ -246,7 +321,7 @@ The following is an example RDP file for a VM in Microsoft Azure. To use this as
 .. code-block:: text
    :emphasize-lines: 23, 47
    :linenos:
-	  
+
    use multimon:i:0
    desktopwidth:i:1920
    desktopheight:i:1080
@@ -306,7 +381,7 @@ The :abbr:`WLA (Windows Logon Agent)` can be uninstalled either from **Control P
     msiexec /x <installerName>.msi
 
 .. warning::
-   If the Windows Logon Agent was installed using the provided :file:`.exe` then you cannot uninstall it using the :file:`.msi` and vice versa. Doing so may lead to a situation where the agent cannot be fully uninstalled. 
+   If the Windows Logon Agent was installed using the provided :file:`.exe` then you cannot uninstall it using the :file:`.msi` and vice versa. Doing so may lead to a situation where the agent cannot be fully uninstalled.
 
 Upgrading
 =========
@@ -320,7 +395,7 @@ Upgrading
     msiexec /i <installerName>.msi /quiet REINSTALLMODE=vomus REINSTALL=ALL
 
 With regards to the use deployment tools it's important to note that :abbr:`WLA (Windows Logon Agent)` currently does not increment the :code:`ProductCode` value. Tools such as Microsoft SCCM uses this property to see if the software is already installed; The comparison of :code:`UpgradeCode` determines product family (e.g. WLA) and :code:`ProductCode` determines what version *is* installed versus what version is *about* to be installed.
-   
+
 .. note::
    With ProductCode being the same, this approach to upgrade will not work *unless* the MSI is modified and re-signed using a trusted certificate.
 
@@ -335,4 +410,3 @@ The WLA registry keys are available under:
 ::
 
     HKEY_LOCAL_MACHINE\SOFTWARE\CRYPTOCard\AuthGINA
-
