@@ -118,14 +118,14 @@ After the Administrative Template has been added, you can open the template to c
 
 - To apply the settings to the local machine and any other domain controllers in this domain, under the **Domain Controllers** node, right-click **Default Domain Controllers Policy**
 
-5. From the dropdown menu, select :guilabel:`Edit`. The **Group Policy Management Editor** window opens
+5. From the dropdown menu, select :guilabel:`Edit...`. The **Group Policy Management Editor** window opens
 6. In the left pane, navigate to :menuselection:`Computer Configuration --> Policies --> Administrative Templates --> WLA Policies --> AuthGINA`. The **SafeNet Agent for Windows Logon** settings are displayed in the right pane
 
 .. thumbnail:: /images/wla/wla_policies.png
 
-7. Enable all the required setting (except **PrimaryServiceURL** and **OptionalSecondaryServiceURL**), if not already enabled, with default value or user-defined value
+7. Enable all the required settings (except **PrimaryServiceURL** and **OptionalSecondaryServiceURL**), if not already enabled, with default value or user-defined value
 
-.. important:: The **PrimaryServiceURL** and **OptionalSecondaryServiceURL** should be set to **[Not Configured]**. The value of both the settings gets configured via the .agent file
+.. important:: The **PrimaryServiceURL** and **OptionalSecondaryServiceURL** should be set to **[Not Configured]**. The value of both the settings gets configured via the **.agent** file
 
 .. note:: For **LocalUserOrGroup_Ex** and **LocalUserOrGroup_In** settings, in the Value field, you can enter **%COMPUTERNAME%\groupname**. In this case, when the GPO settings are pushed to the client machines, the variable **(%COMPUTERNAME%)** will be automatically set to the computer name of the respective client machine
 
