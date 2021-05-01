@@ -35,7 +35,7 @@ extensions = [
 	'sphinxcontrib.images',
 	'sphinx_rtd_theme',
 	'sphinx_tabs.tabs',
-	'sphinxext.adaptive_youtube'	
+	'sphinxext.adaptive_youtube'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -67,3 +67,6 @@ html_favicon = 'favicon.ico'
 latex_elements = {
   'extraclassoptions': 'openany,oneside'
 }
+
+def setup(app):
+   app.add_stylesheet('css/custom.css')
