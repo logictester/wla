@@ -143,6 +143,5 @@ Makefile
 _build/html/_images/table1.png
 _build/html/_static/css/custom.css
 _build/html/_static/table.csv
-_static/css/custom.css
 _static/table.csv
 .DS_Store
