@@ -466,8 +466,44 @@ The table below provides description of the GPO Settings available with the **Sa
   |                                                                         | | using Group Policy.                                                                                                                                                                     |
   +-------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
+Deploying the WLA MSI
+---------------------
 
+**Follow these steps to deploy the WLA MSI to client machines:
 
+- Create an MST file
+- Copy Agent configuration file to client machines
+- Deploy MST and MSI files
+- Set the GPO order
+
+.. note:: To deploy the SafeNet Windows Logon Agent MSI, you need to set **AGENTMODE** and **JSONFILEPATH** values. For this purpose, we use parameterized MSI Installation with the help of a **transform (.mst)** file
+
+Create an MST file
+------------------
+
+To create an MST file, you need to install the **ORCA** tool. It is a free utility from Microsoft, available with the Windows SDK package (Developer Tool).
+
+.. note:: You can download the **ORCA** tool `here <https://docs.microsoft.com/en-us/windows/win32/msi/orca-exe>`_
+
+1. After the successful installation of the tool, **right-click** the SafeNet Windows Logon Agent MSI file (SafeNet Authentication Service Agent for Win 8-10-2012-2016 x64.msi) in the previously created shared folder
+
+2. Click :guilabel:`Edit with Orca`
+
+3. Click :guilabel:`Transform` > :guilabel:`New Transform`
+
+4. In Orca Editor, click :guilabel:`Property` from **Tables** in the left pane
+
+.. thumbnail:: /images/wla/orca_property.png
+
+5. Double-click the value of property **AGENTMODE** and set it as **1**
+
+.. thumbnail:: /images/wla/agentmode.png
+
+6. Double-click the value of property **JSONFILEPATH** and set it to the path on the client machine where the Agent configuration file will be copied to
+
+7.Click File > Generate Transform….
+
+8.Save your Transform (.mst) file with a desired name.
 
 Silent installation
 ===================
