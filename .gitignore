@@ -143,5 +143,14 @@ Makefile
 _build/html/_images/table1.png
 _build/html/_static/css/custom.css
 _build/html/_static/table.csv
-_static/css/custom.css
 _static/table.csv
+.DS_Store
+.DS_Store
+_build/html/_images/agentmode1.png
+_build/html/_images/deploy1.png
+_build/html/_images/file_path1.png
+_build/html/_images/files1.png
+_build/html/_images/jsonfilepath1.png
+_build/html/_images/modification1.png
+_build/html/_images/new1.png
+_build/html/_images/software1.png

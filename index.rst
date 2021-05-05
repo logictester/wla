@@ -466,6 +466,94 @@ The table below provides description of the GPO Settings available with the **Sa
   |                                                                         | | using Group Policy.                                                                                                                                                                     |
   +-------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
+Deploying the WLA MSI
+---------------------
+
+**Follow these steps to deploy the WLA MSI to client machines:
+
+- Create an MST file
+- Copy Agent configuration file to client machines
+- Deploy MST and MSI files
+- Set the GPO order
+
+.. note:: To deploy the SafeNet Windows Logon Agent MSI, you need to set **AGENTMODE** and **JSONFILEPATH** values. For this purpose, we use parameterized MSI Installation with the help of a **transform (.mst)** file
+
+Create an MST file
+------------------
+
+To create an MST file, you need to install the **ORCA** tool. It is a free utility from Microsoft, available with the Windows SDK package (Developer Tool).
+
+.. note:: You can download the **ORCA** tool `here <https://docs.microsoft.com/en-us/windows/win32/msi/orca-exe>`_
+
+1. After the successful installation of the tool, **right-click** the SafeNet Windows Logon Agent MSI file (SafeNet Authentication Service Agent for Win 8-10-2012-2016 x64.msi) in the previously created shared folder
+
+2. Click :guilabel:`Edit with Orca`
+
+3. Click :guilabel:`Transform` > :guilabel:`New Transform`
+
+4. In Orca Editor, click :guilabel:`Property` from **Tables** in the left pane
+
+.. thumbnail:: /images/wla/orca_property.png
+
+5. Double-click the value of property **AGENTMODE** and set it as **1**
+
+.. thumbnail:: /images/wla/agentmode.png
+
+6. Double-click the value of property **JSONFILEPATH** and set it to the path on the client machine where the Agent configuration file will be copied to
+
+.. thumbnail:: /images/wla/jsonfilepath.png
+
+7. Click :guilabel:`File` > :guilabel:`Generate Transform...`
+
+8. Save your Transform (.mst) file with a desired name
+
+Copy the Agent configuration file to client machines
+----------------------------------------------------
+
+Perform these steps to copy the Agent configuration file to the client machines using GPO file distribution:
+
+1. In the **Group Policy Management Editor** navigate to **Computer Configuration > Preferences > Windows Settings > Files**
+
+.. thumbnail:: /images/wla/files.png
+
+2. Right-click **Files** and select :guilabel:`New` > :guilabel:`File`
+
+3. In **New File Properties** select :guilabel:`Create` from the **Action** dropdown
+
+.. thumbnail:: /images/wla/new.png
+
+4. In the **Source file(s):** enter the **UNC path of a shared folder** and in **Destination File:** enter a path on the client machine where the agent configuration file will be stored
+
+.. thumbnail:: /images/wla/file_path.png
+
+.. note:: Keep the Agent COnfiguration file in the shared folder
+
+
+Deploy MST and MSI files
+------------------------
+
+Perform these steps to deploy the MST and the MSI files:
+
+1. In the **Group Policy Management Editor** navigate to **Computer Configuration > Policies > Software Settings > Software Installation**
+
+.. thumbnail:: /images/wla/software.png
+
+2. Right-click **Software Installation** and slect :guilabel:`New` > :guilabel:`Package...`
+
+3. Browse and select the SafeNet Windows Logon Agent MSI file (**SafeNet Authentication Service Agent for Win 8-10-2012-2016 x64.msi**) from the previously created shared folder
+
+4. In **Deploy Software** pop up, select :guilabel:`Advanced` and click :guilabel:`OK`
+
+.. thumbnail:: /images/wla/deploy.png
+
+5. Go to the **Modifications** Tab, and click :guilabel:`Add...`
+
+.. thumbnail:: /images/wla/modification.png
+
+6. Select the MST file and click :guilabel:`OK`
+
+.. note:: Both the MST and the MSI should be selected from the shared folder
+
 
 
 
