@@ -554,6 +554,26 @@ Perform these steps to deploy the MST and the MSI files:
 
 .. note:: Both the MST and the MSI should be selected from the shared folder
 
+Setting the GPO order
+---------------------
+
+If there are more than one GPO linked to an OU/Domain, then the processing order of the GPOs is determined by link order. The GPO with higher link order will be processed first
+
+.. important:: The GPO deploying the WLA Agent Configuration file has to be deployed before deploying the WLA MSI
+
+1. Open the **GPMC** console
+
+2. Select the Domain/OU to which GPOs are linked
+
+3. In the right-pane, click :guilabel:`Linked Group Policy Object` tab
+
+4. Ensure that the GPO - **Deploy SafeNet WLA Agent Configuration file** has higher **Link Order** than the GPO - **Deploy SafeNet WLA MSI and MST**. Change the **Link Order** accordingly, if required
+
+.. thumbnail:: /images/wla/gpo_order.png
+
+The GPO based deployment if SafeNet Windows Logon Agent (WLA) is complete
+
+
 
 
 
