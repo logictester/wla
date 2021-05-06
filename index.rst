@@ -469,7 +469,7 @@ The table below provides description of the GPO Settings available with the **Sa
 Deploying the WLA MSI
 ---------------------
 
-**Follow these steps to deploy the WLA MSI to client machines:
+Follow these steps to deploy the WLA MSI to client machines:
 
 - Create an MST file
 - Copy Agent configuration file to client machines
