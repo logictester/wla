@@ -571,7 +571,7 @@ If there are more than one GPO linked to an OU/Domain, then the processing order
 
 .. thumbnail:: /images/wla/gpo_order.png
 
-The GPO based deployment if SafeNet Windows Logon Agent (WLA) is complete
+The GPO based deployment of SafeNet Windows Logon Agent (WLA) is complete
 
 
 
